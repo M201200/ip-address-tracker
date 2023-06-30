@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin>
+  <link href="https://api.fonts.coollabs.io/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/mainStyles.css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+  
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+
+  <script src="/dist/index.js" defer></script>
+  
+  <title>Frontend Mentor | IP Address Tracker</title>
+
+</head>
+<body>
+<main>
+
+<h1>IP Address Tracker</h1>
+
+  <form class="input" action="">
+    <input class="input-field" type="text" name="input" placeholder="Search for IP address or domain">
+    <button class="input-confirm" name="input"></button>
+  </form>
+
+  <div class="information-field">
+
+    <div class="information-form">
+      <div class="label">
+        IP Address
+      </div>
+      <div class="information" data-ip>
+        --
+      </div>
+    </div>
+    
+    <div class="information-form" >
+      <div class="label">
+        Location
+      </div>
+      <div class="information" data-location>
+        --
+      </div>
+    </div>
+
+    <div class="information-form">
+      <div class="label">
+        Timezone
+      </div>
+      <div class="information" data-timezone>
+        --
+      </div>
+    </div>
+
+    <div class="information-form">
+      <div class="label">
+        ISP
+      </div>
+      <div class="information" data-isp>
+        --
+      </div>
+    </div>
+
+  </div>
+
+  </main>
+
+  <div class="map" id="map"></div>
+  
+</body>
+</html>
