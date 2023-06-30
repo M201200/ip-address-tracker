@@ -26,7 +26,13 @@ function searchRequestInput(input) {
 }
 async function getAndSetData(request) {
     try {
-        const response = await fetch(request);
+        const response = await fetch(request, {
+            headers: {
+                "Content-Type": "application/json",
+                "referrerPolicy": "no-referrer-when-downgrade",
+                "Access-Control-Allow-Origin": 'https://api.ipgeolocation.io/ipgeo'
+            }
+        });
         const data = await response.json();
         if (response.status === 200) {
             showResults(data.ip, `${data.state_prov} ${data.city} ${data.zipcode}`, data.time_zone.offset, data.isp);

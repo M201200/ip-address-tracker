@@ -38,7 +38,12 @@ async function getAndSetData(request: Request) {
   
   try {
     const response = await fetch(request, {
-      referrerPolicy: "no-referrer-when-downgrade"
+      headers: {
+        "Content-Type": "application/json",
+        "referrerPolicy": "no-referrer-when-downgrade",
+        "Access-Control-Allow-Origin": 'https://api.ipgeolocation.io/ipgeo'
+      }
+      
     })
     const data = await response.json()
     if(response.status === 200) {
