@@ -17,6 +17,11 @@ function showResults(ip, location, timezone, isp) {
     timezoneField.innerText = `UTC ${timezone}:00`;
     ispField.innerText = isp;
 }
+function searchRequestInput(input) {
+    const url = 'https://api.ipgeolocation.io/ipgeo';
+    const apiKey = '3be4190ce48249fdbfbcf1e8176b257e';
+    return new Request(`${url}?apiKey=${apiKey}&ip=${input}`);
+}
 async function getData(request) {
     try {
         const response = await fetch(request);
@@ -29,21 +34,17 @@ async function getData(request) {
             alert(data.error.message);
     }
     catch (error) {
-        alert(`Error, ${error}`);
+        alert(error);
     }
 }
-function searchRequestInput(input) {
-    const url = 'https://api.ipgeolocation.io/ipgeo';
-    const apiKey = '3be4190ce48249fdbfbcf1e8176b257e';
-    return new Request(`${url}?apiKey=${apiKey}&${input}`);
-}
 const confirmInputButton = document.querySelector(".input-confirm");
-confirmInputButton.addEventListener("click", function () {
+confirmInputButton.addEventListener("click", async function () {
     const searchInputField = document.querySelector('.input-field');
-    const inputValue = searchInputField.value;
+    let inputValue = searchInputField.value;
     if (inputValue === '')
         return;
     let searchRequest = searchRequestInput(inputValue);
-    getData(searchRequest);
+    let data = await getData(searchRequest);
+    return data;
 });
 //# sourceMappingURL=index.js.map

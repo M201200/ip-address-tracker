@@ -24,28 +24,8 @@ function searchRequestInput(input: string) {
   const url = 'https://api.ipgeolocation.io/ipgeo'
   const apiKey = '3be4190ce48249fdbfbcf1e8176b257e'
 
-  return new Request(`${url}?apiKey=${apiKey}&${input}`)
+  return new Request(`${url}?apiKey=${apiKey}&ip=${input}`)
 }
-// async function getData(request: Request) {
-  
-//   try {
-//     const response = await fetch(request)
-//     const data = await response.json()
-//     if(response.status === 200) {
-//       showResults(data.ip, 
-//                   `${data.state_prov} ${data.city} ${data.zipcode}`, 
-//                   data.time_zone.offset, 
-//                   data.isp)
-//       setLocation(data.latitude, data.longitude)
-//     }
-//     else alert(data.error.message)
-
-//   }
-//   catch(error) {
-//     alert(`Error, ${error}`)
-//   }
-  
-// }
 
 async function getData(request: Request) {
   
@@ -60,30 +40,25 @@ async function getData(request: Request) {
       setLocation(data.latitude, data.longitude)
     }
     else alert(data.error.message)
-
   }
   catch(error) {
-    alert(`Error, ${error}`)
+    alert(error)
   }
   
 }
 
-
-
-
-
 const confirmInputButton = document.querySelector(".input-confirm") as HTMLButtonElement
 
-confirmInputButton.addEventListener("click", function() {
+confirmInputButton.addEventListener("click", async function() {
   const searchInputField = document.querySelector('.input-field') as HTMLInputElement
-  const inputValue = searchInputField.value
-
-// use Promise?
+  let inputValue = searchInputField.value
 
   if (inputValue === '') return
   
   let searchRequest = searchRequestInput(inputValue)
-  getData(searchRequest)
+  let data = await getData(searchRequest)
+
+  return data
 })
 
 
