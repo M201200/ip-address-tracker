@@ -1,12 +1,16 @@
 "use strict";
+const url = 'https://api.ipgeolocation.io/ipgeo';
+const apiKey = '3be4190ce48249fdbfbcf1e8176b257e';
+const map = L.map('map').setView([1, 1], 2);
+const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 function setLocation(latitude, longitude) {
-    const map = L.map('map').setView([latitude, longitude], 14);
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-    return tiles;
+    map.flyTo([latitude, longitude], 14);
+    L.marker([latitude, longitude]).addTo(map);
 }
+getAndSetData(new Request(`${url}?apiKey=${apiKey}`));
 function showResults(ip, location, timezone, isp) {
     const ipField = document.querySelector('[data-ip]');
     const locationField = document.querySelector("[data-location]");
@@ -18,11 +22,9 @@ function showResults(ip, location, timezone, isp) {
     ispField.innerText = isp;
 }
 function searchRequestInput(input) {
-    const url = 'https://api.ipgeolocation.io/ipgeo';
-    const apiKey = '3be4190ce48249fdbfbcf1e8176b257e';
     return new Request(`${url}?apiKey=${apiKey}&ip=${input}`);
 }
-async function getData(request) {
+async function getAndSetData(request) {
     try {
         const response = await fetch(request);
         const data = await response.json();
@@ -31,20 +33,20 @@ async function getData(request) {
             setLocation(data.latitude, data.longitude);
         }
         else
-            alert(data.error.message);
+            alert(data.error);
     }
     catch (error) {
         alert(error);
     }
 }
 const confirmInputButton = document.querySelector(".input-confirm");
-confirmInputButton.addEventListener("click", async function () {
+confirmInputButton.addEventListener("click", function () {
     const searchInputField = document.querySelector('.input-field');
     let inputValue = searchInputField.value;
     if (inputValue === '')
         return;
     let searchRequest = searchRequestInput(inputValue);
-    let data = await getData(searchRequest);
+    let data = getAndSetData(searchRequest);
     return data;
 });
 //# sourceMappingURL=index.js.map

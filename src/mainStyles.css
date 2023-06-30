@@ -59,6 +59,7 @@
     --bg-image-body: url(/images/pattern-bg-desktop.png);
     --bg-color-forms: hsl(0, 0%, 90%);
     --bg-color-buttons: hsl(0, 0%, 17%);
+    --bg-color-buttons-hover: hsl(0, 0%, 30%);
 
     --border-radius: 1em;
     --padding:0.8em;
@@ -103,6 +104,10 @@ button{
     background-position: center;
 }
 
+.input-confirm:hover{
+  background-color: var(--bg-color-buttons-hover);
+}
+
 .label {
     color: var(--text-color-label);
     font-weight: var(--fw-400);
@@ -112,7 +117,7 @@ button{
 .information {
     color: var(--text-color-paragraph);
     font-weight: var(--fw-700);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 /* ///////////////////// */
@@ -173,6 +178,7 @@ h1 {
 
 .information {
   text-align: center;
+  padding: 0.5rem;
 }
 
 .map{
@@ -184,7 +190,7 @@ h1 {
     z-index: -1;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 650px) {
     .information-field {
         grid-template-columns: repeat(4, 1fr);
     }
