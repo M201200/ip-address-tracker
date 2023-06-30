@@ -6,11 +6,11 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+const confirmInputButton = document.querySelector(".input-confirm");
 function setLocation(latitude, longitude) {
     map.flyTo([latitude, longitude], 14);
     L.marker([latitude, longitude]).addTo(map);
 }
-getAndSetData(new Request(`${url}?apiKey=${apiKey}`));
 function showResults(ip, location, timezone, isp) {
     const ipField = document.querySelector('[data-ip]');
     const locationField = document.querySelector("[data-location]");
@@ -39,14 +39,15 @@ async function getAndSetData(request) {
         alert(error);
     }
 }
-const confirmInputButton = document.querySelector(".input-confirm");
 confirmInputButton.addEventListener("click", function () {
     const searchInputField = document.querySelector('.input-field');
     let inputValue = searchInputField.value;
     if (inputValue === '')
         return;
+    if (!/\d\d?\d?\.\d\d?\d?\.\d\d?\d?\.\d\d?\d?/.test(inputValue))
+        return alert('Input correct Ip address');
     let searchRequest = searchRequestInput(inputValue);
-    let data = getAndSetData(searchRequest);
-    return data;
+    return getAndSetData(searchRequest);
 });
+getAndSetData(new Request(`${url}?apiKey=${apiKey}`));
 //# sourceMappingURL=index.js.map

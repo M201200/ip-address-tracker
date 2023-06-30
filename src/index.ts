@@ -1,18 +1,22 @@
+// Global var's and settings
+
 const url = 'https://api.ipgeolocation.io/ipgeo'
 const apiKey = '3be4190ce48249fdbfbcf1e8176b257e'
-const map = L.map('map').setView([1, 1], 2)
 
+const map = L.map('map').setView([1, 1], 2)
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map)
+
+const confirmInputButton = document.querySelector(".input-confirm") as HTMLButtonElement
 
 function setLocation (latitude: number, longitude: number) {
   map.flyTo([latitude, longitude], 14)
   L.marker([latitude, longitude]).addTo(map)
 }
 
-getAndSetData(new Request(`${url}?apiKey=${apiKey}`))
+// General functions
 
 function showResults (ip: string, location: string, timezone: string, isp: string) {
   const ipField = document.querySelector('[data-ip]') as HTMLElement
@@ -27,10 +31,7 @@ function showResults (ip: string, location: string, timezone: string, isp: strin
 }
 
 function searchRequestInput(input: string) {
-  // if (/\d\d?\d?\.\d\d?\d?\.\d\d?\d?\.\d\d?\d?/.test(input)) {
     return new Request(`${url}?apiKey=${apiKey}&ip=${input}`)
-  // } else return new Request(`${url}?apiKey=${apiKey}&ip=dns,${input}`)
-  
 }
 
 async function getAndSetData(request: Request) {
@@ -53,17 +54,19 @@ async function getAndSetData(request: Request) {
   
 }
 
-const confirmInputButton = document.querySelector(".input-confirm") as HTMLButtonElement
+// Event listener - search by IP
 
 confirmInputButton.addEventListener("click", function() {
   const searchInputField = document.querySelector('.input-field') as HTMLInputElement
   let inputValue = searchInputField.value
 
   if (inputValue === '') return
-  
-  let searchRequest = searchRequestInput(inputValue)
-  let data = getAndSetData(searchRequest)
+  if (!/\d\d?\d?\.\d\d?\d?\.\d\d?\d?\.\d\d?\d?/.test(inputValue)) return alert('Input correct Ip address')
 
-  return data
+  let searchRequest = searchRequestInput(inputValue)
+  return getAndSetData(searchRequest)
 })
 
+// On startup locate client IP
+
+getAndSetData(new Request(`${url}?apiKey=${apiKey}`))
