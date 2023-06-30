@@ -30,7 +30,7 @@ async function getAndSetData(request) {
             headers: {
                 "Content-Type": "application/json",
                 "referrerPolicy": "no-referrer-when-downgrade",
-                "Access-Control-Allow-Origin": "https://ip-address-tracker-gamma-tawny.vercel.app/",
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
                 "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
             }
