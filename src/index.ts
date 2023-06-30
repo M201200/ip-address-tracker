@@ -37,7 +37,9 @@ function searchRequestInput(input: string) {
 async function getAndSetData(request: Request) {
   
   try {
-    const response = await fetch(request)
+    const response = await fetch(request, {
+      referrerPolicy: "no-referrer-when-downgrade"
+    })
     const data = await response.json()
     if(response.status === 200) {
       showResults(data.ip, 
